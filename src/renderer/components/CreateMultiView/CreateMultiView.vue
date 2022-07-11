@@ -3,17 +3,28 @@
     <main>
       <div>
         <div class="doc">
-          <h1>确定好公钥顺序之后再填入</h1>
-          <label>公钥：</label>
-          <input class="alt" type="text" v-model="pubKey" :placeholder="pltxt_pubKey"> </input>
-          <button class="alt" @click="addPubKey()">增加公钥</button>
-          <textarea class="alt" v-model="textPubKeys" :placeholder="pltxt_pubKeysLog" disabled></textarea>
+          <div>
+            <h1>方式一：多签脚本创建</h1>
+            <label>脚本：</label>
+            <input class="alt" type="text" v-model="multiScript" :placeholder="pltxt_multiScript"> </input>
+            <button class="alt" @click="createMultiType1()">生成多签地址</button>
+          </div>
           <br></br>
-          <label>输入最小需要的公钥数量：</label>
-          <input class="alt" type="text" v-model="multiInfo.signingThreshold" :placeholder="pltxt_signingThreshold"> </input>
+          <div> 
+            <h1>方式二：公钥创建（确定好公钥顺序之后再填入）</h1>
+            <label>公钥：</label>
+            <input class="alt" type="text" v-model="pubKey" :placeholder="pltxt_pubKey"> </input>
+            <button class="alt" @click="addPubKey()">增加公钥</button>
+            <textarea class="alt" v-model="textPubKeys" :placeholder="pltxt_pubKeysLog" disabled></textarea>
+            <label>输入最小需要的公钥数量：</label>
+            <input class="alt" type="text" v-model="multiInfo.signingThreshold" :placeholder="pltxt_signingThreshold"> </input>
+            <button class="alt" @click="createMulitType2()">生成多签地址</button>
+          </div>
           <br></br>
-          <button class="alt" @click="createMulit()">生成多签地址</button>
-          <textarea class="alt" v-model="multAddress" disabled></textarea>
+          <div>
+            <textarea class="alt" v-model="multAddress" disabled></textarea>
+          </div>
+
         </div>
       </div>
     </main>
@@ -21,7 +32,7 @@
 </template>
 
 <script>
-  import {getAddressFromPublicKey, createMultiAccount} from '../../js/tool'
+  import {getAddressFromPublicKey, createMultiAccount, getMultiInfoFromBase64VerificationScript} from '../../js/tool'
   import {ACCOUNT_ACTION_MULTIINFO} from '../../js/constants/AccountConstants'
 
   export default {
@@ -29,9 +40,11 @@
     data () {
       return {
         pltxt_pubKey: '',
+        pltxt_multiScript: '',
         pltxt_signingThreshold: '0',
         pltxt_pubKeysLog: '地址:公钥',
         pubKey: '',
+        multiScript: '',
         textPubKeys: '',
         multiInfo: {
           pubKeys: [],
@@ -47,7 +60,8 @@
       this.multiInfo.signingThreshold = this.$store.getters.multiInfo.signingThreshold
       this.refreshTextPubKyes()
       if (this.multiInfo.signingThreshold && this.multiInfo.pubKeys.length > parseInt(this.multiInfo.signingThreshold)) {
-        this.createMulit()
+        const multiAccount = this.createMulitType2()
+        this.multiScript = multiAccount.contract.script
       }
       this.$store.watch(state => state.multi.multiInfo, _multiInfo => {
         this.multiInfo = _multiInfo
@@ -77,12 +91,27 @@
           this.textPubKeys = `${this.textPubKeys} \r\n ${textPubkey}`
         }
       },
-      createMulit () {
+      createMultiType1 () {
         try {
-          this.multAddress = JSON.stringify(createMultiAccount(parseInt(this.multiInfo.signingThreshold), this.multiInfo.pubKeys))
-          this.$store.dispatch(ACCOUNT_ACTION_MULTIINFO, this.multiInfo)
+          const multiInfo = getMultiInfoFromBase64VerificationScript(this.multiScript)
+          this.multiInfo.pubKeys = multiInfo.pubKeys
+          this.multiInfo.signingThreshold = multiInfo.threshold
+          this.refreshTextPubKyes()
+          return this.createMulitType2()
         } catch (e) {
           alert(e)
+          return null
+        }
+      },
+      createMulitType2 () {
+        try {
+          const multiAccount = createMultiAccount(parseInt(this.multiInfo.signingThreshold), this.multiInfo.pubKeys)
+          this.multAddress = JSON.stringify(multiAccount)
+          this.$store.dispatch(ACCOUNT_ACTION_MULTIINFO, this.multiInfo)
+          return multiAccount
+        } catch (e) {
+          alert(e)
+          return null
         }
       }
     }
