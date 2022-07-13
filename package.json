@@ -1,6 +1,6 @@
 {
   "name": "neo3tool",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "viko"
   },
@@ -26,7 +26,6 @@
   },
   "build": {
     "productName": "Neo3Tool",
-    "appId": "org.dockeron.dockeron",
     "directories": {
       "output": "build"
     },
@@ -134,7 +133,5 @@
     "webpack-merge": "^4.1.0"
   },
   "bugs": {
-    "url": "https://github.com/dockeron/dockeron/issues",
-    "email": "fluency.03@gmail.com"
   }
 }

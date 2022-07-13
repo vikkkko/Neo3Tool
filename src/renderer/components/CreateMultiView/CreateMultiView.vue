@@ -4,7 +4,7 @@
       <div>
         <div class="doc">
           <div>
-            <h1>方式一：多签脚本创建</h1>
+            <h1>方式一：多签脚本创建(base64string)</h1>
             <label>脚本：</label>
             <input class="alt" type="text" v-model="multiScript" :placeholder="pltxt_multiScript"> </input>
             <button class="alt" @click="createMultiType1()">生成多签地址</button>

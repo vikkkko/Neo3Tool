@@ -7,7 +7,7 @@ describe('Launch', () => {
   it('shows the proper application title', function () {
     return this.app.client.getTitle()
       .then(title => {
-        expect(title).to.equal('dockeron')
+        expect(title).to.equal('neo3tool')
       })
   })
 })

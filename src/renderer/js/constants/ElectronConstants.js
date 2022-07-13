@@ -14,5 +14,5 @@ export const BROWSER_WINDOW_EVENT_CLOSED = 'closed'
 export const BROWSER_WINDOW_EVENT_CLOSE = 'close'
 
 // others
-export const NOTIFICATION_TITLE_DOCKERON = 'Neo3Tool'
+export const NOTIFICATION_TITLE_NEO3TOOL = 'Neo3Tool'
 export const PLATFORM_DARWIN = 'darwin'
