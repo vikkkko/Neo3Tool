@@ -13,7 +13,6 @@ const state = {
 /* eslint no-param-reassign: ["error", { "props": false }] */
 const mutations = {
   [types.UPDATE_SCPARAMS] (state, scparams) {
-    console.log(JSON.stringify(scparams))
     state.scparams = scparams
   }
 }

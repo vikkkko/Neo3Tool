@@ -14,7 +14,6 @@ export class ToolTx {
       }
       let _account = accountsMap.get(_signerAddress).account
       const _isMultiSig = accountsMap.get(_signerAddress).isMultiSig
-      console.log(_isMultiSig)
       if (_isMultiSig) {
         const _script = _account.contract.script
         const multiInfo = tool.getMultiInfoFromBase64VerificationScript(_script)
@@ -24,7 +23,6 @@ export class ToolTx {
           const _address = tool.getAddressFromPublicKey(_pubKeys[i])
           if (accountsMap.has(_address)) {
             _account = accountsMap.get(_address).account
-            console.log(JSON.stringify(_account))
             this.tran.sign(_account, magic)
             _signed = _signed + 1
           }
@@ -55,7 +53,6 @@ export class ToolTx {
   deserialize (unsigntx) {
     if (unsigntx.indexOf('|') > 0) {
       const strs = unsigntx.split('|')
-      console.log(JSON.stringify(strs))
       this.tran = tool.getTranFromHex(strs[0])
       this.multiScript = strs[1]
     } else {

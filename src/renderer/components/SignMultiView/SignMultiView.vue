@@ -117,7 +117,6 @@
           const key = keys.next().value
           const account = this.accountsMap.get(key).account
           const isMultiSig = this.accountsMap.get(key).isMultiSig
-          console.log(isMultiSig)
           if (isMultiSig) {
             const _script = account.contract.script
             const multiInfo = getMultiInfoFromBase64VerificationScript(_script)
@@ -162,8 +161,8 @@
           alert(result)
         } catch (e) {
           alert(e)
-          this.toolTx.deserialize(this.unsigntx)
         }
+        this.toolTx.deserialize(this.unsigntx)
       }
     }
   }

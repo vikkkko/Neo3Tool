@@ -55,7 +55,6 @@ export async function decryptWalletKeys (walletJson, password) {
   const wifs = []
   for (let i = 0; i < _accounts.length; i++) {
     const _account = _accounts[i]
-    console.log(JSON.stringify(_account))
     const wif = await wallet.decrypt(
       _account.encrypted,
       password,
@@ -93,10 +92,8 @@ export async function makeTranWithUnSign (rpcUrl, _sender, _script) {
     alert(`交易发起者 不是 地址类型`)
     return
   }
-  console.log(sciprtHash)
   let rpcClient = new rpc.RPCClient(rpcUrl)
   let currentHeight = await rpcClient.getBlockCount()
-  console.log(currentHeight)
   let _signers = [
     {
       account: sciprtHash,

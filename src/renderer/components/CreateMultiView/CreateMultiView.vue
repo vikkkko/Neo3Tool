@@ -81,7 +81,6 @@
         }
         this.multiInfo.pubKeys.push(this.pubKey)
         this.refreshTextPubKyes()
-        console.log(JSON.stringify(this.$store.state.multi.multiInfo))
       },
       refreshTextPubKyes () {
         this.textPubKeys = ''

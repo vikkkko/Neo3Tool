@@ -43,7 +43,6 @@
     },
     methods: {
       onMenuSelect (selectedMenuName) {
-        console.log(selectedMenuName)
         switch (selectedMenuName) {
           case 'menu-setting':
             this.$router.push({

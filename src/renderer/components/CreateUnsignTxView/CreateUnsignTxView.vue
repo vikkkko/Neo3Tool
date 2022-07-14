@@ -102,7 +102,6 @@
     },
     created () {
       const scparams = this.$store.getters.scparams
-      console.log(JSON.stringify(scparams))
       if (scparams.hex) {
         this.sender = scparams.sender
         this.contract = scparams.smartcontract

@@ -45,7 +45,6 @@
         this.$store.dispatch(SETTING_ACTION_CURNETID, 1)
       }
       this.optionsValue = this.$store.getters.curNetId
-      console.log(this.optionsValue)
       let netInfo
       if (this.optionsValue === 0) {
         netInfo = this.$store.getters.n3t5Info
